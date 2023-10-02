@@ -1,0 +1,20 @@
+{
+  "name": "rpg-convers",
+  "version": "1.1.2",
+  "description": "An rpg conversation maker, To use first call new Conversation([{name: '', message: '', isLeft: bool define if the speaker will be on left or right, imageDirectory: the file for your image if have}], howfast The speaker is in miliseconds, callback function ) ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelsobook/rpg-conversation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaelsobook/rpg-conversation/issues"
+  },
+  "homepage": "https://github.com/rafaelsobook/rpg-conversation#readme"
+}

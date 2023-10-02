@@ -1,7 +1,7 @@
 const generateStyle = require("./tools/generateStyle.js")
 class Conversation {
-    constructor(document){
-        this.intervalForMessage = 200
+    constructor(document, talkingSpeed){
+        this.intervalForMessage = talkingSpeed ? talkingSpeed : 100
         this.intervalGenerating = undefined
         this.closingTimeout = undefined
 
@@ -33,7 +33,7 @@ class Conversation {
     }
     show(message,isLeft, btnName){
         this.convText.innerHTML = message
-        this.convText.style.float = isLeft ? "left" : "right"
+        this.convText.style.left = isLeft ? "28%" : "12%"
         this.convNextBtn.innerHTML = btnName ? btnName : "next"
     }
     open(){
@@ -50,6 +50,22 @@ class Conversation {
             this.mainContainer.style.display = "none"
         },500)
     }
+    addClassNameToELement(elementType, newClassName){
+        switch(elementType){
+            case "container":
+                this.mainContainer.classList.add(newClassName)
+            break
+            case "text":
+                this.convText.classList.add(newClassName)
+            break
+            case "image":
+                this.convCharacImg.classList.add(newClassName)
+            break;
+            case "button":
+                this.convNextBtn.classList.add(newClassName)
+            break;
+        }
+    }
     createElement(document,elementType, className, textInside){
         const elem = document.createElement(elementType)
         elem.className = className
@@ -57,7 +73,7 @@ class Conversation {
         return elem
     }
     setImageOfSpeaker(imageDirectory,isLeft){
-        this.convCharacImg.style.left = isLeft ? "0" : "100%-300px"
+        this.convCharacImg.style.left = isLeft ? "0" : "77%"
         if(imageDirectory){ 
             this.convCharacImg.src = imageDirectory
             this.convCharacImg.style.display = "block"
@@ -68,7 +84,6 @@ class Conversation {
     }
     startConversation(messages, startsInArrayOf,callback){
         if(!this.mainContainer) this.applyStartingStyle()
-        
         this.open()
         const {name, message, isLeft, btnName,imageDirectory } = messages[startsInArrayOf]
         this.setImageOfSpeaker(imageDirectory,isLeft)
@@ -94,10 +109,10 @@ class Conversation {
                 return clearInterval(this.intervalGenerating)
             }
             if(!messages[nextPageNum]){
-                callback && callback({name, message, isLeft})
+                if(callback) callback()
                 return this.close({name, message, isLeft })
             }
-            this.startConversation(messages, nextPageNum)
+            this.startConversation(messages, nextPageNum, callback)
         }
     }
     popAMessage(message, willCloseAfterDuration){
@@ -108,5 +123,4 @@ class Conversation {
         }, willCloseAfterDuration ? willCloseAfterDuration : 4000)
     }
 }
-
 module.exports = Conversation
